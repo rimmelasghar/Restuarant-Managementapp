@@ -2,7 +2,7 @@
 restuarant reservation app
 
 ## Installation: 👨‍💻
-
+open command prompt in the project folder.
 ```bash
 pip install virtualenv
 mkvirtualenv test
