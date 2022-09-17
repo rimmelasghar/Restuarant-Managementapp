@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Reservations{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Tables</a></li>
+  <li class="breadcrumb-item active">Reservation</li>
+{% endblock %}
+
+{% block content %}
+
+  {% if reservations == 0 %}
+  <div class="card mb-2 {% if forloop.first %}border-dark{% endif %}">
+    <div class="card-body p-3">
+      <div class="row">
+        <div class="col-10">
+          <div class="row mb-3">
+            <div class="col-6">
+              <strong class="text-muted">you have No active Reservations</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  {% for reservation in reservations %}
+    <div class="card mb-2 {% if forloop.first %}border-dark{% endif %}">
+      <div class="card-body p-3">
+        <div class="row">
+          <div class="col-2">
+            <img src="{% static 'img/avatar.png' %}" alt="{{ reservation.user.username }}" class="w-100">
+            <small>Table no: {{ reservation.table.id }}</small>
+          </div>
+          <div class="col-10">
+            <div class="row mb-3">
+              <div class="col-6">
+                <strong class="text-muted">{{ reservation.user.username }}</strong>
+              </div>
+              <div class="col-6 text-right">
+                <small class="text-muted">Time:</small>
+                <small class="text-muted">{{ reservation.time.time }}</small>
+              </div>
+              <div class="col-6 text-right">
+                <small class="text-muted">seat reserved @ </small>
+                <small class="text-muted">{{ reservation.reservationField }}</small>
+              </div>
+              <div class="col-6 text-right">
+                <small class="text-muted">seat reserved @ </small>
+                <small class="text-muted">{{ reservation.reservationField }}</small>
+              </div>
+            </div>
+            {{ reservation.capacity }}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  {% endif %}
+
+{% endblock %}

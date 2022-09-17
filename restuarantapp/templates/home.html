@@ -1,0 +1,67 @@
+{% extends 'base.html' %} {% block breadcrumb %}
+{% load static %}
+{% block stylesheet %}
+<style>
+  .container1 {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.img-fluid{
+  opacity: 80%;
+}
+</style>
+{% endblock %}
+<li class="breadcrumb-item active">Tables</li>
+{% endblock %} {% block content %}
+<div class="container">
+  {% if user.is_authenticated %}
+    <form method="post" validate>
+      {% csrf_token %}
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">DateTime</span>
+        </div>
+        <input type="datetime-local" id="reservationField" name="reservationField" required>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Capacity</span>
+        </div>
+        <input type="text" id="capacity" name = "capacity" required>
+      </div>
+      <button type="submit" class="btn btn-success">Search</button>
+      <br>
+      <br>
+    </form>
+    <div class="row">
+    {% for table in tables %}
+    
+    <div class="card" style="width: 18rem; border:none;">
+      <img class="card-img-top" src="{% static 'img/table.jpg' %}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Table {{ table.id }}</h5>
+        <p class="card-text">Capacity :{{ table.capacity }}<br></p>
+        {% if bookid %}
+        <a class="btn btn-primary" href="{% url 'reservation' table.id bookid %}" role="button">reserve</a>
+        {% else %}
+        <a class="btn btn-primary" href="" role="button">reserve</a>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="container1">
+  <img src="{% static 'img/rest.png' %}" class="img-fluid" alt="Responsive image">
+  <div class="centered"><h1>Welcome to Restuarant Reservation System Login to Continue</h1></div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
